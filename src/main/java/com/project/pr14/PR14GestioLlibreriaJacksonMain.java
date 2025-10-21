@@ -143,7 +143,7 @@ public class PR14GestioLlibreriaJacksonMain {
         // *************** CODI PRÀCTICA **********************/ 
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File outputFile = new File(dataFile.getParent(),"llibres_output_jackson.json");
+            File outputFile = new File(dataFile.getParent(),"llibres_output_jakarta.json");
             mapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, llibres);
         } catch (Exception e) {
             // TODO: handle exception

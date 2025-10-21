@@ -54,7 +54,8 @@ public class PR14GestioLlibreriaJakartaMain {
         // *************** CODI PRÀCTICA **********************/
 
         List<Llibre> llibres = new ArrayList<>();
-        try (JsonReader jsonReader = Json.createReader(new FileReader(dataFile))) {
+        try {
+            JsonReader jsonReader =  Json.createReader(new FileReader(dataFile));
             JsonArray jsonArray = jsonReader.readArray();
             for (JsonObject jobject : jsonArray.getValuesAs(JsonObject.class)) {
                 
@@ -129,19 +130,18 @@ public class PR14GestioLlibreriaJakartaMain {
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for(Llibre llibre : llibres){
-            JsonObject llibreJson =  Json.createObjectBuilder()
+            JsonObject llibreJson = (JsonObject) Json.createObjectBuilder()
             .add("id", llibre.getId())
             .add("titol", llibre.getTitol())
             .add("autor",llibre.getAutor())
-            .add("any", llibre.getAny())
-            .build();
+            .add("any", llibre.getAny());
             
             arrayBuilder.add(llibreJson);
 
         }
 
         JsonArray jsonArray = arrayBuilder.build();
-        try (JsonWriter jsonWriter = Json.createWriter(Files.newBufferedWriter(Paths.get(dataFile.getParent(), "llibres_output_jakarta.json")))) {
+        try (JsonWriter jsonWriter = Json.createWriter(Files.newBufferedWriter(Paths.get(dataFile.getParent(), "llibres_output_jackson.json")))) {
             jsonWriter.writeArray(jsonArray);
         } catch (IOException e) {
             e.printStackTrace();
